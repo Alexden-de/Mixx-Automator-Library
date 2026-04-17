@@ -1,0 +1,41 @@
+{
+  "Id": "example2",
+  "Name": "FTP Daily Sync",
+  "Active": true,
+  "ScheduleActive": true,
+  "Schedule": {
+    "Type": "Daily",
+    "IntervalMinutes": 60,
+    "StartTime": "06:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 60,
+  "Actions": [
+    {
+      "Type": "FtpDownload",
+      "Name": "CSVs vom FTP laden",
+      "Enabled": true,
+      "Parameters": {
+        "ServerId": "",
+        "RemotePath": "/",
+        "FilePattern": "*.csv",
+        "FileSelection": "Alle",
+        "MaxFiles": "0",
+        "AfterDownload": "Move",
+        "ArchivePath": "/archiv"
+      }
+    },
+    {
+      "Type": "LocalSave",
+      "Name": "Lokal archivieren",
+      "Enabled": true,
+      "Parameters": {
+        "TargetDirectory": "C:\\Data\\Archiv\\{yyyy}\\{MM}",
+        "Overwrite": "False",
+        "AutoDeleteDays": "365"
+      }
+    }
+  ]
+}

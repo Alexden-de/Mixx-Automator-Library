@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "updated": "2026-04-17",
+  "jobs": [
+    {
+      "id": "http-download-to-csv",
+      "name": "HTTP Download → CSV-Mapping",
+      "description": "Laedt eine CSV-Datei per HTTP herunter und fuehrt ein einfaches Feld-Mapping durch. Gutes Beispiel fuer den Pipeline-Aufbau mit DataMapping-Action.",
+      "category": "Beispiel",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "actions": 2,
+      "path": "jobs/http-download-to-csv/job.mxjob"
+    },
+    {
+      "id": "ftp-daily-sync",
+      "name": "FTP Daily Sync",
+      "description": "Holt taeglich um 06:00 alle neuen CSV-Dateien vom FTP-Server und speichert sie lokal im Archiv.",
+      "category": "FTP",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "actions": 2,
+      "path": "jobs/ftp-daily-sync/job.mxjob"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "Id": "example1",
+  "Name": "HTTP Download und CSV-Mapping",
+  "Active": true,
+  "ScheduleActive": false,
+  "Schedule": {
+    "Type": "Interval",
+    "IntervalMinutes": 60,
+    "StartTime": "08:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 60,
+  "Actions": [
+    {
+      "Type": "HttpDownload",
+      "Name": "CSV herunterladen",
+      "Enabled": true,
+      "Parameters": {
+        "Url": "https://example.com/data.csv",
+        "FileName": "data_{date}.csv"
+      }
+    },
+    {
+      "Type": "DataMapping",
+      "Name": "Felder mappen",
+      "Enabled": true,
+      "Parameters": {
+        "InputDelimiter": ";",
+        "OutputDelimiter": ";",
+        "OutputFileName": "mapped_{datetime}.csv",
+        "IncludeHeaders": "True",
+        "MappingRules": "[\n  { \"Target\": \"Artikelnummer\", \"Source\": \"SKU\" },\n  { \"Target\": \"Bestand\", \"Source\": \"Stock\" },\n  { \"Target\": \"Preis\", \"Expression\": \"{Price} * 1.19\" }\n]"
+      }
+    }
+  ]
+}
