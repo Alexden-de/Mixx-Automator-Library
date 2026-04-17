@@ -33,6 +33,16 @@
       "path": "jobs/wartung-auto-update/job.mxjob"
     },
     {
+      "id": "wartung-auto-backup",
+      "name": "Wartung: Auto-Backup",
+      "description": "Taegliches passwortgeschuetztes Backup aller Konfigurationen (FTP/DB/E-Mail/Jobs) um 02:00 Uhr mit 30 Tagen Aufbewahrung.",
+      "category": "Wartung",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "actions": 1,
+      "path": "jobs/wartung-auto-backup/job.mxjob"
+    },
+    {
       "id": "lieferantenbestand-diff",
       "name": "Lieferantenbestand: Diff + Ameise",
       "description": "Taegliche Bestandsaktualisierung mit Diff-Optimierung und Struktur-Pruefung. Laedt CSV vom Lieferanten-FTP, mappt, vergleicht mit tliefartikel, importiert nur die geaenderten Zeilen via Ameise und sendet bei Fehler eine E-Mail.",

@@ -1,0 +1,30 @@
+{
+  "Id": "autobak1",
+  "Name": "Wartung: Auto-Backup",
+  "Active": false,
+  "ScheduleActive": false,
+  "Schedule": {
+    "Type": "Daily",
+    "IntervalMinutes": 0,
+    "StartTime": "02:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 1440,
+  "Actions": [
+    {
+      "Type": "AutoBackup",
+      "Name": "Taegliches Backup",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "OutputDirectory": "C:\\Backups\\MixxAutomator\\{yyyy}\\{MM}",
+        "FileName": "mixxautomator-{timestamp}.mxbackup",
+        "Password": "",
+        "KeepDays": "30",
+        "AddToPipeline": "True"
+      }
+    }
+  ]
+}
