@@ -1,0 +1,25 @@
+{
+  "Id": "autoupd1",
+  "Name": "Wartung: Auto-Update",
+  "Active": false,
+  "ScheduleActive": false,
+  "Schedule": {
+    "Type": "Weekly",
+    "IntervalMinutes": 0,
+    "StartTime": "03:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": ["Sunday"]
+  },
+  "IntervalMinutes": 10080,
+  "Actions": [
+    {
+      "Type": "SelfUpdate",
+      "Name": "Update pruefen und installieren",
+      "Enabled": true,
+      "Parameters": {
+        "Mode": "Install"
+      }
+    }
+  ]
+}

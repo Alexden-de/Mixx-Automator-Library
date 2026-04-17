@@ -21,6 +21,16 @@
       "version": "1.0",
       "actions": 2,
       "path": "jobs/ftp-daily-sync/job.mxjob"
+    },
+    {
+      "id": "wartung-auto-update",
+      "name": "Wartung: Auto-Update",
+      "description": "Prueft woechentlich (Sonntag 03:00) auf neue Versionen und installiert sie automatisch. Der Dienst startet dabei kurz neu.",
+      "category": "Wartung",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "actions": 1,
+      "path": "jobs/wartung-auto-update/job.mxjob"
     }
   ]
 }
