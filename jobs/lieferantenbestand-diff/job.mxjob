@@ -1,0 +1,102 @@
+{
+  "Id": "stckdiff",
+  "Name": "Lieferantenbestand: Diff + Ameise",
+  "Active": false,
+  "ScheduleActive": false,
+  "Schedule": {
+    "Type": "Daily",
+    "IntervalMinutes": 0,
+    "StartTime": "04:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 1440,
+  "Actions": [
+    {
+      "Type": "FtpDownload",
+      "Name": "Bestand vom FTP laden",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "ServerId": "",
+        "RemotePath": "/",
+        "FilePattern": "*.csv",
+        "FileSelection": "Nur neueste",
+        "MaxFiles": "1",
+        "AfterDownload": "Move",
+        "ArchivePath": "/archiv"
+      }
+    },
+    {
+      "Type": "DataMapping",
+      "Name": "Mapping + Struktur-Pruefung",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "InputDelimiter": ";",
+        "OutputDelimiter": ";",
+        "OutputFileName": "mapped_{datetime}.csv",
+        "IncludeHeaders": "True",
+        "RequiredInputColumns": "SKU,Bestand",
+        "NumericOutputColumns": "Bestand",
+        "MappingRules": "[\n  { \"Target\": \"SKU\", \"Source\": \"SKU\" },\n  { \"Target\": \"Bestand\", \"Source\": \"Bestand\" }\n]"
+      }
+    },
+    {
+      "Type": "JtlSupplierStockDiff",
+      "Name": "Diff mit tliefartikel",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "DatabaseId": "",
+        "SupplierId": "1",
+        "IdentifyBy": "SupplierArtNr",
+        "IdentifierColumn": "SKU",
+        "StockColumn": "Bestand",
+        "Delimiter": ";",
+        "OutputFileName": "stock_diff_{datetime}.csv",
+        "UnsentStockBehavior": "Ignore",
+        "UnsentStockValue": "0",
+        "MinRowsThreshold": "0",
+        "WriteReport": "True"
+      }
+    },
+    {
+      "Type": "AmeiseImport",
+      "Name": "Diff in Wawi importieren",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "DatabaseId": "",
+        "ExePath": "C:\\Program Files (x86)\\JTL-Software\\JTL-wawi-ameise.exe",
+        "TemplateId": "IMP_LIEFBESTAND",
+        "InputFile": "",
+        "TimeoutSeconds": "600"
+      }
+    },
+    {
+      "Type": "LocalSave",
+      "Name": "Diff-Datei archivieren",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "TargetDirectory": "C:\\Data\\Lieferantenbestand\\{yyyy}\\{MM}",
+        "Overwrite": "False",
+        "AutoDeleteDays": "90"
+      }
+    },
+    {
+      "Type": "SmtpEmail",
+      "Name": "Fehlerbenachrichtigung",
+      "Enabled": true,
+      "RunOnError": true,
+      "Parameters": {
+        "AccountId": "",
+        "To": "",
+        "Subject": "[{{JobName}}] Fehler: {{FailedAction}}",
+        "Body": "Der Job '{{JobName}}' ist fehlgeschlagen.\n\nAktion: {{FailedAction}}\nFehler: {{LastError}}\n\nDer Job wurde ggf. automatisch deaktiviert und muss nach Pruefung manuell wieder aktiviert werden."
+      }
+    }
+  ]
+}
