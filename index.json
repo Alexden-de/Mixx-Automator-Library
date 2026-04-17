@@ -9,6 +9,7 @@
       "category": "Beispiel",
       "author": "Mixx IT",
       "version": "1.0",
+      "minVersion": "1.0.0",
       "actions": 2,
       "path": "jobs/http-download-to-csv/job.mxjob"
     },
@@ -19,6 +20,7 @@
       "category": "FTP",
       "author": "Mixx IT",
       "version": "1.0",
+      "minVersion": "1.0.0",
       "actions": 2,
       "path": "jobs/ftp-daily-sync/job.mxjob"
     },
@@ -29,6 +31,7 @@
       "category": "Wartung",
       "author": "Mixx IT",
       "version": "1.0",
+      "minVersion": "1.0.22",
       "actions": 1,
       "path": "jobs/wartung-auto-update/job.mxjob"
     },
@@ -39,6 +42,7 @@
       "category": "Wartung",
       "author": "Mixx IT",
       "version": "1.0",
+      "minVersion": "1.0.28",
       "actions": 1,
       "path": "jobs/wartung-auto-backup/job.mxjob"
     },
@@ -49,6 +53,7 @@
       "category": "JTL Integration",
       "author": "Mixx IT",
       "version": "1.0",
+      "minVersion": "1.0.24",
       "actions": 6,
       "path": "jobs/lieferantenbestand-diff/job.mxjob"
     }
