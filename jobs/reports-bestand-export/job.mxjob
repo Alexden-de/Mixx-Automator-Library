@@ -28,6 +28,16 @@
         "MaxRows": "500000",
         "AllowWrite": "False"
       }
+    },
+    {
+      "Type": "FtpUpload",
+      "Name": "CSV auf FTP hochladen",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "ServerId": "",
+        "RemotePath": "/"
+      }
     }
   ]
 }

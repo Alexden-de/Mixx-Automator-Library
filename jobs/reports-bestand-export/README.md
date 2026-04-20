@@ -17,6 +17,34 @@ Wer mehr Spalten braucht (EAN, HAN, Preise, Sperrmengen einzeln etc.), die
 SQL-Abfrage im Job-Editor entsprechend erweitern — das Grundgeruest mit JOINs
 und Filtern ist schon fertig.
 
+## Pipeline
+
+1. **SqlQuery** — erzeugt die CSV im Pipeline-Temp (`bestand_export_{datetime}.csv`)
+2. **FtpUpload** — laedt die Datei auf den konfigurierten FTP/SFTP hoch
+
+## Nach dem Import anpassen
+
+### 1. Datenbank
+In der SqlQuery-Aktion bei **Datenbank** die JTL-Wawi-DB setzen.
+
+### 2. Warenlager
+Wenn ungleich `kWarenLager = 1`, die `DECLARE`-Zeile in der SQL anpassen.
+Liste der Warenlager: `SELECT kWarenLager, cKuerzel, cName FROM dbo.tWarenLager`.
+
+### 3. FTP-Ziel
+In der FtpUpload-Aktion **FTP-Server** und **Remote-Pfad** waehlen
+(z.B. `/exports/bestand/`). Falls der gewuenschte Server noch nicht
+in den globalen FTP-Konten steht: im Hauptmenue unter FTP-Server
+hinzufuegen, dann hier auswaehlen.
+
+### 4. Aktivieren
+- Haken bei **Aktiv** setzen
+- **Zeitplan aktiv** einschalten
+- Start-Zeit (Default 06:00) anpassen falls gewuenscht
+- Optional: **Test-Modus** einmal aktivieren und Job manuell starten —
+  die CSV wird erzeugt, der FTP-Upload uebersprungen. So kann man die
+  Datei-Struktur pruefen bevor sie auf den Server geht.
+
 Die SELECT-Abfrage ist mit Filtern kombiniert:
 - `cAktiv = 'Y'` — nur aktive Artikel
 - `kStueckliste = 0 OR IS NULL` — keine Stuecklisten-Artikel (deren Bestand
