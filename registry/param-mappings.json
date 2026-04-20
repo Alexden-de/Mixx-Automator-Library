@@ -1,0 +1,68 @@
+[
+  {
+    "NamePattern": "kWarenLager",
+    "EditorHint": "Warenlager",
+    "Label": "Warenlager",
+    "Sql": "SELECT kWarenLager AS Id, cKuerzel + ' — ' + cName AS Display FROM dbo.tWarenLager ORDER BY kWarenLager"
+  },
+  {
+    "NamePattern": "kShop",
+    "EditorHint": "Shop",
+    "Label": "Shops",
+    "Sql": "SELECT kShop AS Id, cName + CASE WHEN nAktiv = 1 THEN '' ELSE ' (inaktiv)' END AS Display FROM dbo.tShop ORDER BY kShop"
+  },
+  {
+    "NamePattern": "kKundenGruppe",
+    "EditorHint": "Kundengruppe",
+    "Label": "Kundengruppen",
+    "Sql": "SELECT kKundenGruppe AS Id, cName AS Display FROM dbo.tKundenGruppe ORDER BY kKundenGruppe"
+  },
+  {
+    "NamePattern": "kZahlungsart",
+    "EditorHint": "Zahlungsart",
+    "Label": "Zahlungsarten",
+    "Sql": "SELECT kZahlungsart AS Id, cName AS Display FROM dbo.tZahlungsart ORDER BY cName"
+  },
+  {
+    "NamePattern": "kVersandArt",
+    "EditorHint": "VersandArt",
+    "Label": "Versandarten",
+    "Sql": "SELECT kVersandArt AS Id, cName AS Display FROM dbo.tversandart ORDER BY cName"
+  },
+  {
+    "NamePattern": "kLieferant",
+    "EditorHint": "Lieferant",
+    "Label": "Lieferanten",
+    "Sql": "SELECT kLieferant AS Id, ISNULL(cLiefNr, '') + ' — ' + cFirma AS Display FROM dbo.tLieferant ORDER BY cFirma"
+  },
+  {
+    "NamePattern": "kSprache",
+    "EditorHint": "Sprache",
+    "Label": "Sprachen",
+    "Sql": "SELECT kSprache AS Id, cISO + ' — ' + cNameDeutsch AS Display FROM DbeS.vSprache ORDER BY kSprache"
+  },
+  {
+    "NamePattern": "kSteuerklasse",
+    "EditorHint": "Steuerklasse",
+    "Label": "Steuerklassen",
+    "Sql": "SELECT kSteuerklasse AS Id, cName AS Display FROM dbo.tSteuerklasse ORDER BY kSteuerklasse"
+  },
+  {
+    "NamePattern": "kFirma",
+    "EditorHint": "Firma",
+    "Label": "Firmen",
+    "Sql": "SELECT kFirma AS Id, cName AS Display FROM dbo.tfirma ORDER BY kFirma"
+  },
+  {
+    "NamePattern": "kExportVorlage",
+    "EditorHint": "ExportVorlage",
+    "Label": "Ameise Export-Vorlagen",
+    "Sql": "SELECT ev.kExportVorlage AS Id, ev.cName + ' [' + ISNULL(et.cName, '') + ']' AS Display FROM dbo.ameise_exportvorlage ev LEFT JOIN dbo.ameise_exporttyp et ON et.kExportTyp = ev.kExportTyp WHERE ev.nDeleted = 0 ORDER BY ev.cName"
+  },
+  {
+    "NamePattern": "kImportVorlage",
+    "EditorHint": "ImportVorlage",
+    "Label": "Ameise Import-Vorlagen",
+    "Sql": "SELECT iv.kImportVorlage AS Id, iv.cName + ' [' + ISNULL(it.cName, '') + ']' AS Display FROM dbo.ameise_importvorlage iv LEFT JOIN dbo.ameise_importtyp it ON it.kImportTyp = iv.kImportTyp WHERE iv.nDeleted = 0 ORDER BY iv.cName"
+  }
+]
