@@ -26,18 +26,6 @@
       }
     },
     {
-      "Type": "ServiceMonitor",
-      "Name": "JTL-DBUpdater pruefen",
-      "Enabled": true,
-      "RunOnError": false,
-      "Parameters": {
-        "ServiceName": "JTL-DBUpdater",
-        "Mode": "StartIfStopped",
-        "TimeoutSeconds": "60",
-        "FailIfNotRunning": "True"
-      }
-    },
-    {
       "Type": "SmtpEmail",
       "Name": "Admin informieren wenn Dienst ausgefallen war",
       "Enabled": true,

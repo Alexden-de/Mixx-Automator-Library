@@ -60,12 +60,12 @@
     {
       "id": "jtl-dienst-watchdog",
       "name": "JTL-Dienst Watchdog",
-      "description": "Prueft alle 5 Minuten die wichtigsten JTL-Wawi-Windows-Dienste (WorkerService, DBUpdater) und startet sie automatisch neu, wenn sie gestoppt sind. Sendet per E-Mail eine Benachrichtigung wenn eingegriffen wurde.",
+      "description": "Prueft alle 5 Minuten den JTL-wawi-WorkerService und startet ihn automatisch neu, wenn er gestoppt ist. Sendet per E-Mail eine Benachrichtigung wenn eingegriffen wurde. Weitere JTL-Dienste koennen per ServiceMonitor-Aktion nach dem Import hinzugefuegt werden.",
       "category": "Wartung",
       "author": "Mixx IT",
-      "version": "1.0",
+      "version": "1.1",
       "minVersion": "1.0.58",
-      "actions": 3,
+      "actions": 2,
       "path": "jobs/jtl-dienst-watchdog/job.mxjob"
     }
   ]

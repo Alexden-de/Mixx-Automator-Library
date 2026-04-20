@@ -7,10 +7,13 @@ den Admin informieren.
 ## Enthaltene Aktionen
 
 1. **ServiceMonitor: JTL-wawi-WorkerService** — startet den Dienst wenn gestoppt.
-2. **ServiceMonitor: JTL-DBUpdater** — startet den Dienst wenn gestoppt.
-3. **SmtpEmail (RunOnError)** — nur wenn mindestens eine der vorangegangenen
-   Aktionen einen Fehler gemeldet hat (Dienst war ausgefallen oder konnte nicht
-   gestartet werden), wird eine Info-Mail verschickt.
+2. **SmtpEmail (RunOnError)** — nur wenn die vorangegangene Aktion einen
+   Fehler gemeldet hat (Dienst war ausgefallen oder konnte nicht gestartet
+   werden), wird eine Info-Mail verschickt.
+
+Weitere JTL-Dienste koennen nach dem Import als zusaetzliche
+ServiceMonitor-Aktionen hinzugefuegt werden — die genauen Namen im
+Dienst-Picker pruefen ("Nur JTL anzeigen").
 
 ## Nach dem Import anpassen
 
@@ -28,8 +31,10 @@ den Admin informieren.
 | Name                          | Aufgabe                                                |
 | ----------------------------- | ------------------------------------------------------ |
 | `JTL-wawi-WorkerService`      | Hintergrundverarbeitung (Workflows, Mail-Versand etc.) |
-| `JTL-DBUpdater`               | Datenbank-Migration nach Updates                       |
 | `JTL-Shipping-Label-Service`  | Versandlabel-Generierung (falls installiert)           |
+
+(Die konkret vorhandenen Dienstnamen koennen je nach JTL-Version und
+Installationstyp abweichen — im Picker nachschauen.)
 
 ## Anforderungen
 
