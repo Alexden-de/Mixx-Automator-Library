@@ -1,6 +1,6 @@
 {
   "Id": "bestexp1",
-  "Name": "Report: Bestand-Export (aktive Artikel, ohne Stuecklisten)",
+  "Name": "Report: Bestand-Export (mit Shop-/Aktivitaets-Filter)",
   "Active": false,
   "ScheduleActive": false,
   "DryRun": false,
@@ -16,12 +16,12 @@
   "Actions": [
     {
       "Type": "SqlQuery",
-      "Name": "Bestand je Warenlager",
+      "Name": "Bestand je Warenlager (mit Filter)",
       "Enabled": true,
       "RunOnError": false,
       "Parameters": {
         "DatabaseId": "",
-        "Query": "-- Bestand-Export: aktive Artikel (cAktiv='Y'), keine Stuecklisten (kStueckliste = 0)\n-- Verfuegbarer Bestand = Bestand - Gesperrt fuer Auslieferung - Gesperrt fuer Verfuegbarkeit\n-- Nur die drei wichtigsten Spalten: Artikelnummer, Name, Bestand (verfuegbar).\n-- Getestet auf Wawi 1.9.x. Bei Multi-Warehouse-Installationen kWarenLager anpassen.\n\nDECLARE @kWarenLager INT = 1;  -- 1 = Standardlager. Pruefen mit: SELECT kWarenLager, cName FROM dbo.tWarenLager\n\nSELECT\n    a.cArtNr     AS Artikelnummer,\n    b.cName      AS Artikelname,\n    (lb.fBestand\n     - ISNULL(lb.fVerfuegbarGesperrt,0)\n     - ISNULL(lb.fAuslieferungGesperrt,0)) AS Bestand\nFROM dbo.tArtikel a\nINNER JOIN dbo.tlagerbestandProLagerLagerartikel lb\n       ON lb.kArtikel = a.kArtikel\n      AND lb.kWarenlager = @kWarenLager\nLEFT JOIN dbo.tArtikelBeschreibung b\n       ON b.kArtikel = a.kArtikel\n      AND b.kPlattform = 1\n      AND b.kSprache = (SELECT TOP 1 kSprache FROM DbeS.vSprache WHERE nWawiStandard = 1)\nWHERE a.cAktiv = 'Y'\n  AND (a.kStueckliste = 0 OR a.kStueckliste IS NULL)\nORDER BY a.cArtNr",
+        "Query": "-- Bestand-Export mit konfigurierbaren Filtern via DECLARE-Variablen.\n-- IDs nachschlagen: Button 'JTL-IDs nachschlagen...' neben der Datenbank-Auswahl.\n-- Werte setzen: Button 'Parameter konfigurieren...' unter der Abfrage.\n\nDECLARE @kWarenLager   INT;       -- im UI 'Mehrfach' + Picker (ein oder mehrere Lager)\nDECLARE @kShop         INT = 1;   -- Haupt-Shop (SELECT kShop, cName FROM dbo.tShop)\nDECLARE @kKundenGruppe INT = 1;   -- Endkunden (fuer Sichtbarkeits-Check)\nDECLARE @nurAktive     BIT = 1;   -- 1 = nur cAktiv='Y'; 0 = auch inaktive\nDECLARE @nurImShop     BIT = 1;   -- 1 = nur im Shop verknuepfte; 0 = alle\n\nSELECT\n    a.cArtNr       AS Artikelnummer,\n    b.cName        AS Artikelname,\n    (lb.fBestand\n     - ISNULL(lb.fVerfuegbarGesperrt, 0)\n     - ISNULL(lb.fAuslieferungGesperrt, 0)) AS Bestand\nFROM dbo.tArtikel a\nINNER JOIN dbo.tlagerbestandProLagerLagerartikel lb\n       ON lb.kArtikel = a.kArtikel\n      AND lb.kWarenlager IN (@kWarenLager)\nLEFT JOIN dbo.tArtikelBeschreibung b\n       ON b.kArtikel = a.kArtikel\n      AND b.kPlattform = 1\n      AND b.kSprache = (SELECT TOP 1 kSprache FROM DbeS.vSprache WHERE nWawiStandard = 1)\nWHERE\n    (@nurAktive = 0 OR a.cAktiv = 'Y')\n    AND (a.kStueckliste = 0 OR a.kStueckliste IS NULL)\n    AND (@nurImShop = 0\n         OR EXISTS (SELECT 1 FROM dbo.tArtikelShop s\n                     WHERE s.kArtikel = a.kArtikel AND s.kShop = @kShop))\n    AND NOT EXISTS (\n        SELECT 1 FROM dbo.tArtikelSichtbarkeit sb\n         WHERE sb.kArtikel = a.kArtikel\n           AND sb.kShop = @kShop\n           AND sb.kKundenGruppe = @kKundenGruppe\n    )\nORDER BY a.cArtNr",
         "OutputFileName": "bestand_export_{datetime}.csv",
         "Delimiter": ";",
         "IncludeHeaders": "True",
