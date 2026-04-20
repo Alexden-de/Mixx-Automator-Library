@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-04-17",
+  "updated": "2026-04-20",
   "jobs": [
     {
       "id": "http-download-to-csv",
@@ -56,6 +56,17 @@
       "minVersion": "1.0.24",
       "actions": 6,
       "path": "jobs/lieferantenbestand-diff/job.mxjob"
+    },
+    {
+      "id": "jtl-dienst-watchdog",
+      "name": "JTL-Dienst Watchdog",
+      "description": "Prueft alle 5 Minuten die wichtigsten JTL-Wawi-Windows-Dienste (WorkerService, DBUpdater) und startet sie automatisch neu, wenn sie gestoppt sind. Sendet per E-Mail eine Benachrichtigung wenn eingegriffen wurde.",
+      "category": "Wartung",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "minVersion": "1.0.58",
+      "actions": 3,
+      "path": "jobs/jtl-dienst-watchdog/job.mxjob"
     }
   ]
 }

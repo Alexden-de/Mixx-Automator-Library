@@ -1,0 +1,53 @@
+{
+  "Id": "jtlwdog1",
+  "Name": "JTL-Dienst Watchdog",
+  "Active": false,
+  "ScheduleActive": false,
+  "Schedule": {
+    "Type": "Interval",
+    "IntervalMinutes": 5,
+    "StartTime": "",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 5,
+  "Actions": [
+    {
+      "Type": "ServiceMonitor",
+      "Name": "JTL-wawi-WorkerService pruefen",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "ServiceName": "JTL-wawi-WorkerService",
+        "Mode": "StartIfStopped",
+        "TimeoutSeconds": "60",
+        "FailIfNotRunning": "True"
+      }
+    },
+    {
+      "Type": "ServiceMonitor",
+      "Name": "JTL-DBUpdater pruefen",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "ServiceName": "JTL-DBUpdater",
+        "Mode": "StartIfStopped",
+        "TimeoutSeconds": "60",
+        "FailIfNotRunning": "True"
+      }
+    },
+    {
+      "Type": "SmtpEmail",
+      "Name": "Admin informieren wenn Dienst ausgefallen war",
+      "Enabled": true,
+      "RunOnError": true,
+      "Parameters": {
+        "AccountId": "",
+        "To": "",
+        "Subject": "[Mixx-Automator] JTL-Dienst war ausgefallen",
+        "Body": "Auf {machinename} wurde um {datetime} ein JTL-Dienst als gestoppt erkannt und automatisch neu gestartet.\n\nJob: {jobname}\nFehlgeschlagene Aktion: {lastaction}\nDetails: {lasterror}\n\nBitte die JTL-Logs pruefen, um die Ausfallursache zu ermitteln (haeufige Gruende: Wawi-Datenbank kurzzeitig offline, Windows-Updates, Ressourcen-Mangel)."
+      }
+    }
+  ]
+}
