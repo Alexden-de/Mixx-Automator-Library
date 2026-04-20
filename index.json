@@ -58,6 +58,17 @@
       "path": "jobs/lieferantenbestand-diff/job.mxjob"
     },
     {
+      "id": "reports-bestand-export",
+      "name": "Report: Bestand-Export",
+      "description": "Taeglicher CSV-Export des verfuegbaren Bestands aller aktiven Artikel auf einem bestimmten Warenlager. Keine Stuecklisten, Warenlager-ID per SQL-Variable konfigurierbar. Direkte DB-Abfrage ohne Ameise — schneller und skriptbar.",
+      "category": "JTL-Reports",
+      "author": "Mixx IT",
+      "version": "1.0",
+      "minVersion": "1.0.61",
+      "actions": 1,
+      "path": "jobs/reports-bestand-export/job.mxjob"
+    },
+    {
       "id": "jtl-dienst-watchdog",
       "name": "JTL-Dienst Watchdog",
       "description": "Prueft alle 5 Minuten den JTL-wawi-WorkerService und startet ihn automatisch neu, wenn er gestoppt ist. Sendet per E-Mail eine Benachrichtigung wenn eingegriffen wurde. Weitere JTL-Dienste koennen per ServiceMonitor-Aktion nach dem Import hinzugefuegt werden.",

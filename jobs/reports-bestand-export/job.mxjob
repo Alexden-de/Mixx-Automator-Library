@@ -1,0 +1,33 @@
+{
+  "Id": "bestexp1",
+  "Name": "Report: Bestand-Export (aktive Artikel, ohne Stuecklisten)",
+  "Active": false,
+  "ScheduleActive": false,
+  "DryRun": false,
+  "Schedule": {
+    "Type": "Daily",
+    "IntervalMinutes": 0,
+    "StartTime": "06:00",
+    "EndTime": "",
+    "RepeatMinutes": 0,
+    "Days": []
+  },
+  "IntervalMinutes": 1440,
+  "Actions": [
+    {
+      "Type": "SqlQuery",
+      "Name": "Bestand je Warenlager",
+      "Enabled": true,
+      "RunOnError": false,
+      "Parameters": {
+        "DatabaseId": "",
+        "Query": "-- Bestand-Export: aktive Artikel (cAktiv='Y'), keine Stuecklisten (kStueckliste = 0)\n-- Verfuegbarer Bestand = Bestand - Gesperrt fuer Auslieferung - Gesperrt fuer Verfuegbarkeit\n-- Getestet auf Wawi 1.9.x. Bei Multi-Warehouse-Installationen kWarenLager anpassen.\n\nDECLARE @kWarenLager INT = 1;  -- 1 = Standardlager. Pruefen mit: SELECT kWarenLager, cName FROM dbo.tWarenLager\n\nSELECT\n    a.cArtNr                AS Artikelnummer,\n    a.cBarcode              AS EAN,\n    a.cHAN                  AS HerstellerArtNr,\n    b.cName                 AS Artikelname,\n    lb.fBestand             AS Bestand,\n    lb.fVerfuegbarGesperrt  AS GesperrtVerfuegbar,\n    lb.fAuslieferungGesperrt AS GesperrtAuslieferung,\n    (lb.fBestand\n     - ISNULL(lb.fVerfuegbarGesperrt,0)\n     - ISNULL(lb.fAuslieferungGesperrt,0)) AS VerfuegbarerBestand,\n    a.fVKNetto              AS VK_Netto,\n    a.fEKNetto              AS EK_Netto\nFROM dbo.tArtikel a\nINNER JOIN dbo.tlagerbestandProLagerLagerartikel lb\n       ON lb.kArtikel = a.kArtikel\n      AND lb.kWarenlager = @kWarenLager\nLEFT JOIN dbo.tArtikelBeschreibung b\n       ON b.kArtikel = a.kArtikel\n      AND b.kPlattform = 1\n      AND b.kSprache = (SELECT TOP 1 kSprache FROM DbeS.vSprache WHERE nWawiStandard = 1)\nWHERE a.cAktiv = 'Y'\n  AND (a.kStueckliste = 0 OR a.kStueckliste IS NULL)\nORDER BY a.cArtNr",
+        "OutputFileName": "bestand_export_{datetime}.csv",
+        "Delimiter": ";",
+        "IncludeHeaders": "True",
+        "MaxRows": "500000",
+        "AllowWrite": "False"
+      }
+    }
+  ]
+}
