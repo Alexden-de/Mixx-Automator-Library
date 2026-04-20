@@ -5,20 +5,17 @@ aktiven Artikel auf einem bestimmten Warenlager — ohne Stuecklisten.
 
 ## Was genau wird exportiert
 
-Eine Zeile pro Artikel auf dem konfigurierten Warenlager mit:
+Eine Zeile pro Artikel auf dem konfigurierten Warenlager mit drei Spalten:
 
-| Spalte                  | Quelle                                                      |
-| ----------------------- | ----------------------------------------------------------- |
-| Artikelnummer           | `tArtikel.cArtNr`                                           |
-| EAN                     | `tArtikel.cBarcode`                                         |
-| HerstellerArtNr         | `tArtikel.cHAN`                                             |
-| Artikelname             | `tArtikelBeschreibung.cName` in Wawi-Standard-Sprache       |
-| Bestand                 | `fBestand` im Lager                                         |
-| GesperrtVerfuegbar      | `fVerfuegbarGesperrt` — fuer Verfuegbarkeit gesperrt        |
-| GesperrtAuslieferung    | `fAuslieferungGesperrt` — fuer Auslieferung blockiert       |
-| **VerfuegbarerBestand** | Bestand abzgl. beider Sperrmengen                           |
-| VK_Netto                | `fVKNetto`                                                  |
-| EK_Netto                | `fEKNetto`                                                  |
+| Spalte        | Quelle                                                              |
+| ------------- | ------------------------------------------------------------------- |
+| Artikelnummer | `tArtikel.cArtNr`                                                   |
+| Artikelname   | `tArtikelBeschreibung.cName` in Wawi-Standard-Sprache               |
+| **Bestand**   | Verfuegbar = `fBestand` − `fVerfuegbarGesperrt` − `fAuslieferungGesperrt` |
+
+Wer mehr Spalten braucht (EAN, HAN, Preise, Sperrmengen einzeln etc.), die
+SQL-Abfrage im Job-Editor entsprechend erweitern — das Grundgeruest mit JOINs
+und Filtern ist schon fertig.
 
 Die SELECT-Abfrage ist mit Filtern kombiniert:
 - `cAktiv = 'Y'` — nur aktive Artikel

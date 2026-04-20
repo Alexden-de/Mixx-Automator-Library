@@ -60,10 +60,10 @@
     {
       "id": "reports-bestand-export",
       "name": "Report: Bestand-Export",
-      "description": "Taeglicher CSV-Export des verfuegbaren Bestands aller aktiven Artikel auf einem bestimmten Warenlager. Keine Stuecklisten, Warenlager-ID per SQL-Variable konfigurierbar. Direkte DB-Abfrage ohne Ameise — schneller und skriptbar.",
+      "description": "Taeglicher CSV-Export mit 3 Spalten (Artikelnummer, Artikelname, Bestand) aller aktiven Artikel auf einem bestimmten Warenlager. Keine Stuecklisten, Warenlager-ID per SQL-Variable konfigurierbar. Direkte DB-Abfrage ohne Ameise — schneller und skriptbar.",
       "category": "JTL-Reports",
       "author": "Mixx IT",
-      "version": "1.0",
+      "version": "1.1",
       "minVersion": "1.0.61",
       "actions": 1,
       "path": "jobs/reports-bestand-export/job.mxjob"
